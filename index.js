@@ -6,34 +6,44 @@ const config = require("./config.json");
 const discord_intents = Object.values(Discord.Intents.FLAGS);
 
 // Create clients
-const d_client = new Discord.Client({ intents: discord_intents });
-const r_client = new Revolt.Client();
+const clients = {
+    discord: {
+        client: new Discord.Client({ intents: discord_intents }),
+        message_event: "messageCreate",
+        login: function() {
+            this.client.login(config.tokens.discord);
+        }
+    },
+    revolt: {
+        client: new Revolt.Client(),
+        message_event: "message",
+        login: function() {
+            this.client.loginBot(config.tokens.revolt);
+        }
+    }
+}
 
 // Log clients in
-d_client.login(config.tokens.discord);
-r_client.loginBot(config.tokens.revolt);
+for (let client in clients) {
+    clients[client].login();
+}
 
 // Keep track of how many clients are ready
-let total_clients = 2;
+let total_clients = Object.keys(clients).length;
 let clients_ready = 0;
 
 // ==================================================
 // On clients ready
 // ==================================================
-d_client.on("ready", () => {
-    clients_ready += 1;
-    console.log(`CH.AI Discord client online!`);
-    if (clients_ready == total_clients) {
-        ready_up();
-    }
-});
-r_client.on("ready", () => {
-    clients_ready += 1;
-    console.log(`CH.AI Revolt client online!`);
-    if (clients_ready == total_clients) {
-        ready_up();
-    }
-});
+for (let client in clients) {
+    clients[client].client.on("ready", () => {
+        clients_ready += 1;
+        console.log(`CH.AI ${client} client online!`);
+        if (clients_ready == total_clients) {
+            ready_up();
+        }
+    });
+}
 
 // Fancy terminal output on startup
 function ready_up() {
@@ -67,18 +77,18 @@ function ready_up() {
 // ==================================================
 // On client message
 // ==================================================
-d_client.on("message", (message) => {
-    handleMessage(message, "discord");
-});
-r_client.on("message", (message) => {
-    handleMessage(message, "revolt");
-});
+for (let client in clients) {
+    clients[client].client.on(clients[client].message_event, (message) => {
+        handleMessage(message, client);
+    });
+}
 
 // ==================================================
 // Handling messages
 // ==================================================
 async function handleMessage(message, client) {
-    if ([d_client.user.username, r_client.user.username].includes(message.author.username)) { return false; }
+    if ([Object.keys(clients).forEach((client) => { return clients[client].client.user.username })].includes(message.author.username)) { return false; }
+    if (message.author.bot) { return false; }
 
     if (message.content == "ch.ping") {
         message.reply("Pong!");
