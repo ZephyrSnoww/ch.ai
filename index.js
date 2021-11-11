@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
 const Revolt = require("revolt.js");
+const axios = require("axios");
+
 const config = require("./config.json");
 
 // Just get all discord intents because fuck discord
@@ -90,11 +92,13 @@ async function handleMessage(message, client) {
     if ([Object.keys(clients).forEach((client) => { return clients[client].client.user.username })].includes(message.author.username)) { return false; }
     if (message.author.bot) { return false; }
 
+    // Ping command
     if (message.content == "ch.ping") {
         message.reply("Pong!");
         return console.log(`${message.author.username} pinged CH.AI!`);
     }
 
+    // Invite command
     if (message.content == "ch.invite") {
         let response;
 
@@ -106,5 +110,69 @@ async function handleMessage(message, client) {
 
         message.reply(response);
         return console.log(`${message.author.username} got CH.AI invite links!`);
+    }
+
+    // Help command
+    if (message.content == "ch.help") {
+        let help_message;
+
+        if (client == "discord") {
+            help_message = `
+ch.help ....... This command
+ch.ping ....... Ping CH.AI
+ch.invite ..... Invite CH.AI to a server
+
+ch.wallhaven .. Get a random wallpaper from wallhaven
+\`\`\``;
+        } else if (client == "revolt") {
+            help_message = `\`\`\`
+# Basics
+| Command | Function |
+| ------- | -------- |
+| ch.help | This command |
+| ch.ping | Ping CH.AI |
+| ch.invite | Invite CH.AI to a server |
+
+# API Functionality
+| Command | Function |
+| ------- | -------- |
+| ch.wallhaven | Get a random wallpaper from wallhaven |`;
+        }
+
+        message.reply(`\`\`\`
+                      (
+                        )     (
+                 ___...(-------)-....___
+             .-""       )    (          ""-.
+       .-'\`\`'|-._             )         _.-|
+      /  .--.|   \`""---...........---""\`   |
+     /  /    |                             |
+     |  |    |                             |
+      \\  \\   |            CH.AI            |
+       \`\\ \`\\ |          -----------        |
+         \`\\ \`|        A chat bot with      |
+         _/ /\\     too many api commands   /
+        (__/  \\                           /
+     _..---""\` \\                         /\`""---.._
+  .-'           \\                       /          '-.
+ :               \`-.__             __.-'              :
+ :                  ) ""---...---"" (                 :
+  '._               \`"--...___...--"\`              _.'
+    \\""--..__                              __..--""/
+     '._     """----.....______.....----"""     _.'
+        \`""--..,,_____            _____,,..--""\`
+                      \`"""----"""\`
+${help_message}`);
+        return console.log(`${message.author.username} got CH.AI help!`);
+    }
+
+    // Wallhaven command
+    if (message.content.startsWith("ch.wallhaven")) {
+        if (message.content == "ch.wallhaven") {
+            axios.get("https://wallhaven.cc/api/v1/search?sorting=random").then(response => {
+                message.reply(response.data.data[0].url);
+                return console.log(`${message.author.username} made a wallhaven request!`);
+            })
+        }
     }
 }
