@@ -1,0 +1,18 @@
+{
+  "name": "api-bot",
+  "version": "1.0.0",
+  "description": "A chat bot (Revolt/Discord) that makes use of a more than necessary amount of APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "revolt",
+    "chat",
+    "bot",
+    "api"
+  ],
+  "author": "Sophie",
+  "license": "ISC"
+}
