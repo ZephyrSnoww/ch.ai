@@ -1,5 +1,5 @@
 {
-  "name": "api-bot",
+  "name": "ch.ai",
   "version": "1.0.0",
   "description": "A chat bot (Revolt/Discord) that makes use of a more than necessary amount of APIs",
   "main": "index.js",
@@ -11,7 +11,8 @@
     "revolt",
     "chat",
     "bot",
-    "api"
+    "api",
+    "chai"
   ],
   "author": "Sophie",
   "license": "ISC"
