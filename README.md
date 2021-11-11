@@ -1,8 +1,5 @@
-# CH.AI
-## Chat Application Interface
- A chat bot (Revolt/Discord) that makes use of a more than necessary amount of APIs.
-
----
+# CH.AI (Chat Application Interface)
+A chat bot (Revolt/Discord) that makes use of a more than necessary amount of APIs.
 
 ## APIs
 | API | Description | Status |
