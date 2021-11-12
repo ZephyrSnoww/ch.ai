@@ -124,11 +124,12 @@ async function handleMessage(message, client) {
 
         if (client == "discord") {
             help_message = `
-ch.help ....... This command
-ch.ping ....... Ping CH.AI
-ch.invite ..... Invite CH.AI to a server
+ch.help ................ This command
+ch.ping ................ Ping CH.AI
+ch.invite .............. Invite CH.AI to a server
 
-ch.wallhaven .. Get a random wallpaper from wallhaven
+ch.wallhaven ........... Get a random wallpaper from wallhaven
+ch.wallhaven <search> .. Get a wallhaven wallpaper with a search
 \`\`\``;
         } else if (client == "revolt") {
             help_message = `\`\`\`
@@ -142,7 +143,8 @@ ch.wallhaven .. Get a random wallpaper from wallhaven
 # API Functionality
 | Command | Function |
 | ------- | -------- |
-| ch.wallhaven | Get a random wallpaper from wallhaven |`;
+| ch.wallhaven | Get a random wallpaper from wallhaven |
+| ch.wallhaven <search> | Get a wallhaven wallpaper with a search |`;
         }
 
         message.reply(`\`\`\`
@@ -180,6 +182,13 @@ ${help_message}`);
             axios.get("https://wallhaven.cc/api/v1/search?sorting=random").then(response => {
                 message.reply(response.data.data[0].url);
                 return console.log(`${message.author.username} made a wallhaven request!`);
+            });
+        }
+        else {
+            let search = message.content.replace("ch.wallhaven ", "");
+            axios.get(`https://wallhaven.cc/api/v1/search?q=${encodeURIComponent(search)}&sorting=random`).then(response => {
+                message.reply(response.data.data[0].url);
+                return console.log(`${message.author.username} did a wallhaven search!`);
             });
         }
     }

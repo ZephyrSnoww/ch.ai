@@ -14,5 +14,5 @@ A chat bot (Revolt/Discord) that makes use of a more than necessary amount of AP
 | IP2Location | Get the location of an IP address | Planned |
 | Soundcloud | Access song and artist information from soundcloud.com | Planned |
 | Twitter | Access information from twitter.com | Planned |
-| Wallhaven | Access a wallpaper image database with information alongside images | Planned |
+| Wallhaven | Access a wallpaper image database with information alongside images | Implemented |
 | Wikipedia | Access the entire wikipedia database | Planned |
