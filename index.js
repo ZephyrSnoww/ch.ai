@@ -28,6 +28,16 @@ const clients = {
     }
 }
 
+// List of commands
+const commands = [
+    ["ch.help", "This command"],
+    ["ch.ping", "Ping CH.AI"],
+    ["ch.invite", "Invite CH.AI to a server"],
+    ["ch.wallhaven", "Get a random wallpaper from wallhaven"],
+    ["ch.wallhaven <tag>", "Search for wallpapers with a specific tag from wallhaven"],
+    ["ch.colormind", "Get a random color pallette from colormind"]
+]
+
 // Log clients in
 for (let client in clients) {
     clients[client].login();
@@ -140,28 +150,21 @@ async function handleMessage(message, client) {
         let help_message;
 
         if (client == "discord") {
-            help_message = `
-ch.help ................ This command
-ch.ping ................ Ping CH.AI
-ch.invite .............. Invite CH.AI to a server
-
-ch.wallhaven ........... Get a random wallpaper from wallhaven
-ch.wallhaven <search> .. Get a wallhaven wallpaper with a search
-\`\`\``;
+            let command_strings = [];
+            commands.forEach(command => {
+                command_strings.push(`${command[0]} ${"." * (30 - command[0].length)} ${command[1]}`);
+            });
+            help_message = command_strings.join("\n");
         } else if (client == "revolt") {
+            let command_strings = [];
+            commands.forEach(command => {
+                command_strings.push(`| ${command[0]} | ${command[1]} |`);
+            });
             help_message = `\`\`\`
 # Basics
 | Command | Function |
 | ------- | -------- |
-| ch.help | This command |
-| ch.ping | Ping CH.AI |
-| ch.invite | Invite CH.AI to a server |
-
-# API Functionality
-| Command | Function |
-| ------- | -------- |
-| ch.wallhaven | Get a random wallpaper from wallhaven |
-| ch.wallhaven <search> | Get a wallhaven wallpaper with a search |`;
+${command_strings.join("\n")}`;
         }
 
         message.reply(`\`\`\`
@@ -221,8 +224,23 @@ ${help_message}`);
                 const buffer = canvas.toBuffer("image/png");
                 const attachment = new Discord.MessageAttachment(buffer, "colormind.png");
 
-                message.reply({files: [attachment]});
-                return console.log(`${message.author.username} got a random colormind pallette!`);
+                if (client == "discord") {
+                    message.reply({files: [attachment]});
+                    return console.log(`${message.author.username} got a random colormind pallette!`);
+                } else if (client == "revolt") {
+                    fs.writeFileSync("./data/colormind.png", buffer);
+                    axios.post(`https://api.revolt.chat/channels/${message.channel._id}/messages`, {
+                        content: "test",
+                        nonce: (Math.random() * 1000000000).toString(),
+                        attachments: [ "./data/colormind.png" ]
+                    }, {
+                        headers: {
+                            "x-bot-token": config.tokens.revolt
+                        }
+                    }).then(response => {
+                        return console.log(`${message.author.username} got a random colormind pallette!`);
+                    });
+                }
             });
         }
     }
