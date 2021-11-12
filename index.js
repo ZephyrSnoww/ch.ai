@@ -92,13 +92,17 @@ async function handleMessage(message, client) {
     if ([Object.keys(clients).forEach((client) => { return clients[client].client.user.username })].includes(message.author.username)) { return false; }
     if (message.author.bot) { return false; }
 
+    // ==================================================
     // Ping command
+    // ==================================================
     if (message.content == "ch.ping") {
         message.reply("Pong!");
         return console.log(`${message.author.username} pinged CH.AI!`);
     }
 
+    // ==================================================
     // Invite command
+    // ==================================================
     if (message.content == "ch.invite") {
         let response;
 
@@ -112,7 +116,9 @@ async function handleMessage(message, client) {
         return console.log(`${message.author.username} got CH.AI invite links!`);
     }
 
+    // ==================================================
     // Help command
+    // ==================================================
     if (message.content == "ch.help") {
         let help_message;
 
@@ -166,13 +172,15 @@ ${help_message}`);
         return console.log(`${message.author.username} got CH.AI help!`);
     }
 
+    // ==================================================
     // Wallhaven command
+    // ==================================================
     if (message.content.startsWith("ch.wallhaven")) {
         if (message.content == "ch.wallhaven") {
             axios.get("https://wallhaven.cc/api/v1/search?sorting=random").then(response => {
                 message.reply(response.data.data[0].url);
                 return console.log(`${message.author.username} made a wallhaven request!`);
-            })
+            });
         }
     }
 }
