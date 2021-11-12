@@ -1,6 +1,9 @@
+const { createCanvas } = require("canvas");
+
 const Discord = require("discord.js");
 const Revolt = require("revolt.js");
 const axios = require("axios");
+const fs = require("fs");
 
 const config = require("./config.json");
 
@@ -50,29 +53,43 @@ for (let client in clients) {
 // Fancy terminal output on startup
 function ready_up() {
     console.log(`
-                      (
-                        )     (
-                 ___...(-------)-....___
-             .-""       )    (          ""-.
-       .-'\`\`'|-._             )         _.-|
-      /  .--.|   \`""---...........---""\`   |
-     /  /    |                             |
-     |  |    |                             |
-      \\  \\   |                             |
-       \`\\ \`\\ |    ===> CH.AI ONLINE <===   |
-         \`\\ \`|                             |
-         _/ /\\                             /
-        (__/  \\                           /
-     _..---""\` \\                         /\`""---.._
-  .-'           \\                       /          '-.
- :               \`-.__             __.-'              :
- :                  ) ""---...---"" (                 :
-  '._               \`"--...___...--"\`              _.'
-    \\""--..__                              __..--""/
-     '._     """----.....______.....----"""     _.'
-        \`""--..,,_____            _____,,..--""\`
-                      \`"""----"""\`
-    
+                                ▒▒                                
+                    ▒▒        ▒▒        ▒▒                        
+                  ▒▒        ▒▒        ▒▒                          
+                  ▒▒        ▒▒        ▒▒                          
+                    ▒▒        ▒▒        ▒▒                        
+                      ▒▒        ▒▒        ▒▒                      
+                        ▒▒        ▒▒        ▒▒                    
+                          ▒▒        ▒▒        ▒▒                  
+                          ▒▒        ▒▒        ▒▒                  
+                        ░░        ░░        ░░                    
+                      ░░        ▒▒        ░░                      
+                                                                  
+                                                                  
+                      ▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒                      
+                ▓▓▓▓▓▓                      ▓▓▓▓▓▓                
+              ▓▓        ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒        ▓▓              
+            ██    ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒    ██            
+            ▓▓██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██▓▓            
+            ▓▓  ▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓░░▓▓██████      
+            ▓▓        ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓        ░░▓▓      ██    
+            ▓▓                                    ░░▓▓██▒▒        
+            ▓▓                                    ░░▓▓    ██    ▓▓
+            ▓▓            CH.AI ONLINE            ░░▓▓    ▓▓    ▓▓
+            ▓▓                                    ░░▓▓    ▓▓    ▓▓
+            ▓▓                                    ░░▓▓▒▒▒▒▒▒░░░░░░
+            ▓▓                                    ░░▓▓░░░░░░▒▒    
+        ▒▒▒▒▓▓                                  ░░░░▓▓▓▓▓▓▓▓      
+      ▒▒░░░░▓▓░░                                ░░░░▓▓░░░░░░▒▒    
+    ▒▒░░      ▓▓░░                            ░░░░▓▓          ▒▒  
+  ▓▓░░          ▓▓░░░░░░                  ░░░░░░▓▓            ░░▓▓
+  ▓▓░░            ▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░▓▓▓▓              ░░▓▓
+    ▓▓░░              ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                ░░▓▓  
+      ▓▓░░░░░░                                        ░░░░░░▓▓    
+        ▓▓▓▓██░░░░                            ░░░░░░░░▓▓▓▓▓▓      
+              ▓▓▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░▓▓▓▓▓▓▓▓            
+                    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                    
+
 === BEGINNING LOG ===`);
 }
 
@@ -148,28 +165,21 @@ ch.wallhaven <search> .. Get a wallhaven wallpaper with a search
         }
 
         message.reply(`\`\`\`
-                      (
-                        )     (
-                 ___...(-------)-....___
-             .-""       )    (          ""-.
-       .-'\`\`'|-._             )         _.-|
-      /  .--.|   \`""---...........---""\`   |
-     /  /    |                             |
-     |  |    |                             |
-      \\  \\   |            CH.AI            |
-       \`\\ \`\\ |          -----------        |
-         \`\\ \`|        A chat bot with      |
-         _/ /\\     too many api commands   /
-        (__/  \\                           /
-     _..---""\` \\                         /\`""---.._
-  .-'           \\                       /          '-.
- :               \`-.__             __.-'              :
- :                  ) ""---...---"" (                 :
-  '._               \`"--...___...--"\`              _.'
-    \\""--..__                              __..--""/
-     '._     """----.....______.....----"""     _.'
-        \`""--..,,_____            _____,,..--""\`
-                      \`"""----"""\`
+      ██    ██    ██                                    
+    ██      ██  ██                                      
+    ██    ██    ██                                      
+      ██  ██      ██                                    
+      ██    ██    ██                                    
+                                                        
+  ████████████████████                                  
+  ██                ██████                              
+  ██     CHAT       ██  ██                              
+  ██  APPLICATION   ██  ██                              
+  ██   INTERFACE    ██████                              
+    ██            ██                                    
+████████████████████████                                
+██                    ██                                
+  ████████████████████
 ${help_message}`);
         return console.log(`${message.author.username} got CH.AI help!`);
     }
@@ -189,6 +199,30 @@ ${help_message}`);
             axios.get(`https://wallhaven.cc/api/v1/search?q=${encodeURIComponent(search)}&sorting=random`).then(response => {
                 message.reply(response.data.data[0].url);
                 return console.log(`${message.author.username} did a wallhaven search!`);
+            });
+        }
+    }
+
+    // ==================================================
+    // Colormind command
+    // ==================================================
+    if (message.content.startsWith("ch.colormind")) {
+        if (message.content == "ch.colormind") {
+            axios.post("http://colormind.io/api/", { model: "default" }).then(response => {
+                const colors = response.data.result;
+                const canvas = createCanvas(50 * colors.length, 50);
+                const context = canvas.getContext("2d");
+
+                for (let i = 0; i < colors.length; i++) {
+                    context.fillStyle = `rgb(${colors[i].join(", ")})`;
+                    context.fillRect(50 * i, 0, 50 * (i + 1), 50);
+                }
+
+                const buffer = canvas.toBuffer("image/png");
+                const attachment = new Discord.MessageAttachment(buffer, "colormind.png");
+
+                message.reply({files: [attachment]});
+                return console.log(`${message.author.username} got a random colormind pallette!`);
             });
         }
     }
