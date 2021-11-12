@@ -6,7 +6,7 @@ A chat bot (Revolt/Discord) that makes use of a more than necessary amount of AP
 | --- | ----------- | ------ |
 | Bandcamp | Access song and artist information from bandcamp.com | Planned |
 | Bit.ly | Shorten links | Planned |
-| Colormind | Generate color schemes via deep learning | Planned |
+| Colormind | Generate color schemes via deep learning | In Progress |
 | COLOURlovers | Access over a million named colores and more than 325,000 color palettes | Planned |
 | Eventful | Access a large collection of events taking place in local markets throughout the world | Planned |
 | Food | Access over 360,000 recipes and 80,000 food products | Planned |
@@ -16,3 +16,4 @@ A chat bot (Revolt/Discord) that makes use of a more than necessary amount of AP
 | Twitter | Access information from twitter.com | Planned |
 | Wallhaven | Access a wallpaper image database with information alongside images | Implemented |
 | Wikipedia | Access the entire wikipedia database | Planned |
+| WolframAlpha | Ask an AI about math, science, history, or current events | Planned |
