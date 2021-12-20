@@ -1,7 +1,9 @@
 # CH.AI (Chat Application Interface)
+
 A chat bot that makes use of a more than necessary amount of APIs.
 
 ## APIs
+
 | API | Description | Status |
 | --- | ----------- | ------ |
 | Bandcamp | Access song and artist information from bandcamp.com | Planned |
@@ -17,3 +19,19 @@ A chat bot that makes use of a more than necessary amount of APIs.
 | Wallhaven | Access a wallpaper image database with information alongside images | Planned |
 | Wikipedia | Access the entire wikipedia database | Planned |
 | WolframAlpha | Ask an AI about math, science, history, or current events | Planned |
+
+---
+
+## Support
+
+### Support Server Invites
+
+[Telegram Support Server](https://t.me/+32NeAwwbGXJmODYx)
+[Discord Support Server](https://discord.gg/E4dgsytzRs)
+[Revolt Support Server](https://app.revolt.chat/invite/dFeJfhf0)
+
+### Bot Invites
+
+[Telegram Bot Invite](http://t.me/ch_ai_bot)
+[Discord Bot Invite](https://discord.com/api/oauth2/authorize?client_id=908220543558381588&permissions=8&scope=bot)
+[Revolt Bot Invite](https://app.revolt.chat/bot/01FM6NHPY1DB31RCPDSBHD1M2J)
