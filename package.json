@@ -17,6 +17,6 @@
   "author": "Sophie",
   "license": "ISC",
   "dependencies": {
-    "ch.api.js": "^1.2.2"
+    "ch.api.js": "^1.3.2"
   }
 }
