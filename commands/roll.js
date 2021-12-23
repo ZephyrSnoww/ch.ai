@@ -1,6 +1,8 @@
 module.exports = {
     data: {
-        name: "roll"
+        name: "roll",
+        arguments: "<sides>",
+        description: "Roll a die with a specific number of sides"
     },
 
     async execute(message, client) {

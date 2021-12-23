@@ -1,6 +1,8 @@
 module.exports = {
     data: {
-        name: "ping"
+        name: "ping",
+        arguments: "",
+        description: "Ping the bot"
     },
 
     async execute(message, client) {
