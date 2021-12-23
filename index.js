@@ -5,8 +5,9 @@ const fs = require("fs");
 const config = require("./config.json");
 
 // Create a new client
-const client = new Client({});
-client.prefix = "ch.";
+const client = new Client({
+    prefix: "ch."
+});
 
 // Load command files
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
