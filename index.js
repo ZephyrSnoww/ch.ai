@@ -25,15 +25,23 @@ client.on("ready", (client) => {
 
 // When a message is recieved
 client.on("message", async (message, clientFrom) => {
+    // If the message doesnt have an author (was sent by a webhook on discord)
+    // Or the author is a bot, stop
     if (message.author === null || message.author.bot) { return; }
 
+    // If the message doesnt start with the clients prefix, stop
     if (!message.content.startsWith(client.prefix)) { return; }
+
+    // Get the command the user did
     const command = client.commands.get(message.content.split(" ")[0].split(".")[1]);
 
+    // If the command doesnt exist, stop
     if (!command) { return; }
 
+    // Try to execute the command
     try {
         await command.execute(message, clientFrom);
+    // Tell the user if an error happens
     } catch (error) {
         if (error) { console.error(error); }
         message.reply(`There was an error while executing this command!`);
