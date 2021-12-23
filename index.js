@@ -6,16 +6,24 @@ const config = require("./config.json");
 
 // Create a new client
 const client = new Client({
-    prefix: "ch."
+    prefix: "ch.",
+    telegramOwner: "sv_145",
+    discordOwner: "184474965859368960",
+    revoltOwner: "01FM118Q3W39W1RD76AYRPMA30"
 });
 
 // Load command files
-const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
+let commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 client.commands = new Map();
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.data.name, command);
+}
+
+// Function for checking if a user is the bot owner
+function isOwner(user) {
+    return (user.id == client.telegramOwner) || (user.id == client.discordOwner) || (user.id == client.revoltOwner);
 }
 
 // When ready
@@ -32,11 +40,34 @@ client.on("message", async (message, clientFrom) => {
     // If the message doesnt start with the clients prefix, stop
     if (!message.content.startsWith(client.prefix)) { return; }
 
+    if (message.content === `${client.prefix}reload`) {
+        if (!isOwner(message.author)) {
+            return message.reply(`You must be the bot owner to do that command!`);
+        }
+
+        commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
+        client.commands = new Map();
+
+        for (const file of commandFiles) {
+            const command = require(`./commands/${file}`);
+            client.commands.set(command.data.name, command);
+        }
+
+        return message.reply(`ch.ai has been reloaded!`);
+    }
+
     // Get the command the user did
     const command = client.commands.get(message.content.split(" ")[0].split(".")[1]);
 
     // If the command doesnt exist, stop
     if (!command) { return; }
+
+    // If the command is owner only
+    if (command.data.ownerOnly) {
+        if (!isOwner(message.author)) {
+            return message.reply(`You must be the bot owner to do that command!`);
+        }
+    }
 
     // Try to execute the command
     try {
