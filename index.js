@@ -20,7 +20,7 @@ for (const file of commandFiles) {
 
 // When ready
 client.on("ready", (client) => {
-    console.log(`Logged into ${client.name.toUpperCase()}!`);
+    console.log(`Logged into ${client.name}!`);
 });
 
 // When a message is recieved
@@ -50,7 +50,7 @@ client.on("message", async (message, clientFrom) => {
 
 // Login
 client.login({
-    telegramToken: config.tokens.telegram,
-    discordToken: config.tokens.discord,
-    revoltToken: config.tokens.revolt
+    telegramToken: config.tokens.Telegram,
+    discordToken: config.tokens.Discord,
+    revoltToken: config.tokens.Revolt
 });
