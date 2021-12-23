@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 module.exports = {
     data: {
         name: "help",
@@ -7,7 +9,7 @@ module.exports = {
 
     async execute(message, client) {
         // Load command files
-        const commandFiles = fs.readdirSync("./").filter(file => file.endsWith(".js"));
+        const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
         let commands = {};
         let output = [];
 
