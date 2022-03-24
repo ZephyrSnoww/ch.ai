@@ -210,39 +210,39 @@ ${help_message}${(client == "discord") ? "\`\`\`" : "" }}`);
     // ==================================================
     // Colormind command
     // ==================================================
-    // if (message.content.startsWith("ch.colormind")) {
-    //     if (message.content == "ch.colormind") {
-    //         axios.post("http://colormind.io/api/", { model: "default" }).then(response => {
-    //             const colors = response.data.result;
-    //             const canvas = createCanvas(50 * colors.length, 50);
-    //             const context = canvas.getContext("2d");
+    if (message.content.startsWith("ch.colormind")) {
+        if (message.content == "ch.colormind") {
+            axios.post("http://colormind.io/api/", { model: "default" }).then(response => {
+                const colors = response.data.result;
+                const canvas = createCanvas(50 * colors.length, 50);
+                const context = canvas.getContext("2d");
 
-    //             for (let i = 0; i < colors.length; i++) {
-    //                 context.fillStyle = `rgb(${colors[i].join(", ")})`;
-    //                 context.fillRect(50 * i, 0, 50 * (i + 1), 50);
-    //             }
+                for (let i = 0; i < colors.length; i++) {
+                    context.fillStyle = `rgb(${colors[i].join(", ")})`;
+                    context.fillRect(50 * i, 0, 50 * (i + 1), 50);
+                }
 
-    //             const buffer = canvas.toBuffer("image/png");
-    //             const attachment = new Discord.MessageAttachment(buffer, "colormind.png");
+                const buffer = canvas.toBuffer("image/png");
+                const attachment = new Discord.MessageAttachment(buffer, "colormind.png");
 
-    //             if (client == "discord") {
-    //                 message.reply({files: [attachment]});
-    //                 return console.log(`${message.author.username} got a random colormind pallette!`);
-    //             } else if (client == "revolt") {
-    //                 fs.writeFileSync("./data/colormind.png", buffer);
-    //                 let formData = new FormData();
-    //                 formData.append("file", fs.createReadStream("./data/colormind.png"), "colormind.png");
-    //                 axios.post(`https://api.anonfiles.com/upload`, formData, {
-    //                     headers: {
-    //                         ...formData.getHeaders()
-    //                     }
-    //                 }).then(response => {
-    //                     message.reply(`hi ${response.data.data.file.url.full}`);
-    //                     console.log(response.data.data.file.url.full);
-    //                     return console.log(`${message.author.username} got a random colormind pallette!`);
-    //                 });
-    //             }
-    //         });
-    //     }
-    // }
+                if (client == "discord") {
+                    message.reply({files: [attachment]});
+                    return console.log(`${message.author.username} got a random colormind pallette!`);
+                } else if (client == "revolt") {
+                    fs.writeFileSync("./data/colormind.png", buffer);
+                    let formData = new FormData();
+                    formData.append("file", fs.createReadStream("./data/colormind.png"), "colormind.png");
+                    axios.post(`https://api.anonfiles.com/upload`, formData, {
+                        headers: {
+                            ...formData.getHeaders()
+                        }
+                    }).then(response => {
+                        message.reply(`hi ${response.data.data.file.url.full}`);
+                        console.log(response.data.data.file.url.full);
+                        return console.log(`${message.author.username} got a random colormind pallette!`);
+                    });
+                }
+            });
+        }
+    }
 }
